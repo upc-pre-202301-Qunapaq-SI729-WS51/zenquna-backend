@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface CampaignRepository extends JpaRepository<Campaign, Long>{
     List<Campaign> findByOrganizationName(String name);
-    boolean existsByOrganizationId(String organizationId);
+    boolean existsByOrganizationId(Long organizationId);
 }

@@ -2,7 +2,9 @@ package com.qunapaq.zenquna.controller;
 
 import com.qunapaq.zenquna.model.Donor;
 import com.qunapaq.zenquna.exception.ValidationException;
+import com.qunapaq.zenquna.model.User;
 import com.qunapaq.zenquna.repository.DonorRepository;
+import com.qunapaq.zenquna.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,12 @@ import java.util.List;
 @RequestMapping("/api/zq/v1")
 public class DonorController {
     private final DonorRepository donorRepository;
+    private final UserRepository userRepository;
 
-    public DonorController(DonorRepository donorRepository) {
+    public DonorController(DonorRepository donorRepository, UserRepository userRepository)
+    {
         this.donorRepository = donorRepository;
+        this.userRepository = userRepository;
     }
 
     //EndPoint: http://localhost:8080/api/zq/v1/donors
@@ -32,6 +37,9 @@ public class DonorController {
     @Transactional
     @PostMapping("/donors")
     public ResponseEntity<Donor> createDonor(@RequestBody Donor donor) {
+        User user = userRepository.findById(donor.getId())
+                .orElseThrow(() -> new ValidationException("User not found"));
+        donor.setUser(user);
         existsByDni(donor);
         validationDonor(donor);
         return new ResponseEntity<>(donorRepository.save(donor), HttpStatus.CREATED);
@@ -78,7 +86,7 @@ public class DonorController {
         if (donor.getDNI() == null || donor.getDNI().isEmpty()) {
             throw new ValidationException("El DNI es obligatorio");
         }
-        if (donor.getDNI().length() > 8) {
+        if (!(donor.getDNI().length() == 8)) {
             throw new ValidationException("El DNI no puede tener más de 8 caracteres");
         }
         if (donor.getFirstName() == null || donor.getFirstName().trim().isEmpty()) {

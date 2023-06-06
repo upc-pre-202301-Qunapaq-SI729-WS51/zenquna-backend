@@ -45,4 +45,7 @@ public class Campaign {
     private String headerImage;
     @Column(name="body_image")
     private String bodyImage;
+    /* add one or many locations for a one campaign*/
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
+    private List<Location> locations;
 }

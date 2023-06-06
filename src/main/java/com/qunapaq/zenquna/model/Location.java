@@ -25,4 +25,8 @@ public class Location {
     private String province;
     @Column(name="department", nullable = false)
     private String department;
+    @ManyToOne
+    @JoinColumn(name = "campaign_id", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_CAMPAIGN_ID"))
+    private Campaign campaign;
 }

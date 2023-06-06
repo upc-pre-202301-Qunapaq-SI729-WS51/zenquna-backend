@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Table(name="organizations")
 public class Organization {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @OneToOne
     @JoinColumn(name="user_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_USER_ORG_ID"))

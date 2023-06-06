@@ -14,8 +14,8 @@ import lombok.Builder;
 @Table(name = "donors")
 public class Donor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_USER_DON_ID"))

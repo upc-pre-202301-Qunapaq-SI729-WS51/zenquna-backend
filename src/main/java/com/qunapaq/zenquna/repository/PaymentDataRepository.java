@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PaymentDataRepository extends JpaRepository<PaymentData, Long>{
-    List<PaymentData> findByDonorId(String donorId);
-    boolean existsByDonorId(String donorId);
+    List<PaymentData> findByDonorId(Long donorId);
+    boolean existsByDonorId(Long donorId);
     @Query("SELECT CASE WHEN COUNT(pd) > 0 THEN 'true' ELSE 'false' END FROM PaymentData pd WHERE pd.expirationDate > CURRENT_DATE")
     boolean dateStillValid();
 }
