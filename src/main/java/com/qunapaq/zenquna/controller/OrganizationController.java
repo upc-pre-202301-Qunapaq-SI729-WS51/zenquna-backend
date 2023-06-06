@@ -66,14 +66,14 @@ public class OrganizationController {
     }
 
     private void existsByRuc(Organization organization) {
-        if (organizationRepository.existsByRUC(organization.getRUC())) {
+        if (organization.getRUC() != null && organizationRepository.existsByRUC(organization.getRUC())) {
             throw new ValidationException("RUC already exists");
         }
     }
 
     public void validationOrganization(Organization organization) {
-        if (organization.getRUC() == null || organization.getRUC().isEmpty()) {
-            throw new ValidationException("La RUC es requerida");
+        if(organization.getRUC() != null && organization.getRUC().length() != 11){
+            throw new ValidationException("El RUC debe tener 11 dígitos");
         }
         if (organization.getName() == null || organization.getName().isEmpty()) {
             throw new ValidationException("El nombre es obligatorio");

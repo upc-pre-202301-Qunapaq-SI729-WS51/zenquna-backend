@@ -2,6 +2,7 @@ package com.qunapaq.zenquna.controller;
 
 import com.qunapaq.zenquna.model.Campaign;
 import com.qunapaq.zenquna.exception.ValidationException;
+import com.qunapaq.zenquna.model.Location;
 import com.qunapaq.zenquna.model.Organization;
 import com.qunapaq.zenquna.repository.CampaignRepository;
 import com.qunapaq.zenquna.repository.OrganizationRepository;
@@ -45,10 +46,22 @@ public class CampaignController {
     public ResponseEntity<Campaign> createCampaign(@RequestBody Campaign campaign) {
         Organization organization = organizationRepository.findById(campaign.getOrganization().getId())
                 .orElseThrow(() -> new ValidationException("Organization not found"));
+
+        // Asignar la organización a la campaña
+        campaign.setOrganization(organization);
+
+        // Asignar la campaña a cada ubicación
+        if (campaign.getLocations() != null) {
+            for (Location location : campaign.getLocations()) {
+                location.setCampaign(campaign);
+            }
+        }
+
         existsByOrganizationId(campaign);
         validationCampaign(campaign);
         return new ResponseEntity<>(campaignRepository.save(campaign), HttpStatus.CREATED);
     }
+
 
     //EndPoint: http://localhost:8080/api/zq/v1/campaigns
     //Method: PUT
@@ -109,7 +122,7 @@ public class CampaignController {
         if (campaign.getStatus() == null || campaign.getStatus().isEmpty()) {
             throw new ValidationException("Status is required");
         }
-        if (campaign.getStatus().equals("ACTIVE") || campaign.getStatus().equals("INACTIVE")) {
+        if (!campaign.getStatus().equals("ACTIVE") && !campaign.getStatus().equals("INACTIVE")) {
             throw new ValidationException("Status must be ACTIVE or INACTIVE");
         }
     }

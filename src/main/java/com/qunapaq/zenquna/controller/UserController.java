@@ -36,11 +36,29 @@ public class UserController {
         validationUser(user);
         return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED);
     }
+
+    //EndPoint: http://localhost:8080/api/zq/v1/users
+    //Method: PUT
+    @Transactional
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        User userToUpdate = userRepository.findById(id)
+                .orElseThrow(() -> new ValidationException("User not found"));
+        userToUpdate.setUsername(user.getUsername());
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setPassword(user.getPassword());
+        userToUpdate.setUserType(user.getUserType());
+        existsByUsernameAndEmail(userToUpdate);
+        validationUser(userToUpdate);
+        return new ResponseEntity<>(userRepository.save(userToUpdate), HttpStatus.OK);
+    }
+
+
     public void validationUser(User user) {
         if(user.getUsername()==null||user.getUsername().isEmpty()) {
             throw new ValidationException("El nombre de usuario es obligatorio");
         }
-        if(user.getUsername().length()>22){
+        if(user.getUsername().length()>30){
             throw new ValidationException("El nombre de usuario no puede tener más de 22 caracteres");
         }
         if(user.getEmail()==null||user.getEmail().trim().isEmpty()){
