@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/zq/v1")
+@CrossOrigin(origins = "*")
 public class OrganizationController {
     private final OrganizationRepository organizationRepository;
     private final UserRepository userRepository;

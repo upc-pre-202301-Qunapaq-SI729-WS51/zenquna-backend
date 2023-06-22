@@ -1,6 +1,7 @@
 package com.qunapaq.zenquna.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,6 @@ public class Location {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_CAMPAIGN_ASSIGNED_ID"))
-    @JsonBackReference
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Campaign campaign;
 }

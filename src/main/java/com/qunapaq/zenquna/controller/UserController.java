@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/zq/v1")
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserRepository userRepository;
 
@@ -52,7 +53,6 @@ public class UserController {
         validationUser(userToUpdate);
         return new ResponseEntity<>(userRepository.save(userToUpdate), HttpStatus.OK);
     }
-
 
     public void validationUser(User user) {
         if(user.getUsername()==null||user.getUsername().isEmpty()) {

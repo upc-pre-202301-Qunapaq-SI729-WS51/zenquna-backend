@@ -22,12 +22,12 @@ public class Donation {
     @ManyToOne
     @JoinColumn(name="campaign_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_CAMPAIGN_HELP_ID"))
-    /*@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)*/
+    @JsonProperty("campaign_id")
     private Campaign campaign;
     @ManyToOne
     @JoinColumn(name="payment_data_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_PAYMENT_DATA_ID"))
-    /*@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)*/
+    @JsonProperty("payment_data_id")
     private PaymentData paymentData;
     @Column(name="amount", nullable = false)
     private Double amount;

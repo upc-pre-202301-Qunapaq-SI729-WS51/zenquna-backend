@@ -1,5 +1,6 @@
 package com.qunapaq.zenquna.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,6 @@ public class BankAccount {
     @ManyToOne
     @JoinColumn(name="campaign_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_CAMPAIGN_ID"))
-    /*@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)*/
+    @JsonProperty("campaign_id")
     private Campaign campaign;
 }

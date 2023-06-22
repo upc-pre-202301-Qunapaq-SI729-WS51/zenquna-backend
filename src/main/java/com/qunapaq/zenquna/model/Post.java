@@ -22,7 +22,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name="campaign_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_CAMPAIGN_POST_ID"))
-    /*@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)*/
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Campaign campaign;
     @Column(name="title", nullable = false)
     private String title;

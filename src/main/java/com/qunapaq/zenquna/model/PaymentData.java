@@ -22,6 +22,7 @@ public class PaymentData {
     @ManyToOne
     @JoinColumn(name="donor_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_DONOR_ID"))
+    @JsonProperty("donor_id")
     /*@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)*/
     private Donor donor;
     @Column(name="card_number", nullable = false)

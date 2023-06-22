@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/zq/v1")
+@CrossOrigin(origins = "*")
 public class LocationController {
     private final LocationRepository locationRepository;
 

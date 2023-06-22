@@ -20,6 +20,7 @@ public class Organization {
     @OneToOne
     @JoinColumn(name="user_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_USER_ORG_ID"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
     @Column(name="name", nullable = false)
     private String name;

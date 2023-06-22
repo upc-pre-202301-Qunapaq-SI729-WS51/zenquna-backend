@@ -1,5 +1,6 @@
 package com.qunapaq.zenquna.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Donor {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_USER_DON_ID"))
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
     @Column(name = "first_name", nullable = false)
     private String firstName;

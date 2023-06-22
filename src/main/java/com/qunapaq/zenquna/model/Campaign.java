@@ -24,7 +24,7 @@ public class Campaign {
     @ManyToOne
     @JoinColumn(name="organization_id", nullable = false,
             foreignKey = @ForeignKey(name="FK_ORGANIZATION_ID"))
-    /*@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)*/
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Organization organization;
     @Column(name="name", nullable = false)
     private String name;
@@ -48,6 +48,6 @@ public class Campaign {
     private String bodyImage;
     /* add one or many locations for a one campaign*/
     @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Location> locations;
 }
