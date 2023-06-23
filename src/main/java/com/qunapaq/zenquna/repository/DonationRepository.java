@@ -9,10 +9,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface DonationRepository extends JpaRepository<Donation, Long> {
+
     @Query("SELECT d FROM Donation d WHERE d.paymentData.donor.id = :donorId")
-    List<Donation> findByDonorId(@Param("donorId") Long donorId);
+    List<Donation> findAllByDonorId(@Param("donorId") Long donorId);
+
     List<Donation> findByCampaignId(Long campaignId);
+
     List<Donation> findByDate(LocalDate date);
+
     List<Donation> findByDateBetween(LocalDate startDate, LocalDate endDate);
 }
+
 
